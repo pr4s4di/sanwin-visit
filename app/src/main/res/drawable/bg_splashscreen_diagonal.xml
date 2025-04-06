@@ -1,0 +1,17 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:bottom="-400dp"
+        android:left="0dp"
+        android:right="-500dp"
+        android:top="400dp">
+        <rotate
+            android:fromDegrees="-15"
+            android:pivotX="0%"
+            android:pivotY="100%">
+            <shape android:shape="rectangle">
+                <solid android:color="@color/colorSplashScreenBase" />
+            </shape>
+        </rotate>
+
+    </item>
+</layer-list>

@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="10dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    tools:context=".FragmentAbsenDetailPhoto">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txtViewFotoKunjungan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="Foto Kunjungan"
+                android:textSize="20dp" />
+
+            <TextView
+                android:id="@+id/txtViewFotoKunjunganDetail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingBottom="10dp"
+                android:text="Foto yang sudah di ambil akan tampil disini" />
+
+            <ImageView
+                android:id="@+id/imageViewFotoKunjungan"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:src="@mipmap/ic_logout" />
+            <View
+                android:id="@+id/viewSeperatorTop"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginTop="15dp"
+                android:background="@color/colorPrimary"
+                app:layout_constraintTop_toBottomOf="@id/linearLayoutButton" />
+            <LinearLayout
+                android:layout_marginBottom="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <ImageView
+                    android:layout_marginRight="10dp"
+                    android:id="@+id/imageViewStatus"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@mipmap/ic_logout" />
+
+                <TextView
+                    android:gravity="center_vertical"
+                    android:id="@+id/txtViewStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Masuk" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/txtViewDateTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="10dp"
+                    android:drawableStart="@drawable/ic_access_time_black_24dp"
+                    android:drawableLeft="@drawable/ic_access_time_black_24dp"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="5dp"
+                    android:text="Check In :" />
+
+                <TextView
+                    android:id="@+id/txtViewTglCheckOut"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="10dp"
+                    android:drawableStart="@drawable/ic_access_time_black_24dp"
+                    android:drawableLeft="@drawable/ic_access_time_black_24dp"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="5dp"
+                    android:text="Check Out" />
+
+                <TextView
+                    android:id="@+id/txtViewAlamat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="10dp"
+                    android:drawableStart="@drawable/ic_location_on_black_24dp"
+                    android:drawableLeft="@drawable/ic_location_on_black_24dp"
+                    android:paddingBottom="5dp"
+                    android:text="asd" />
+            </LinearLayout>
+            <FrameLayout
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ProgressBar
+                    android:visibility="gone"
+                    android:id="@+id/progressBarLoading"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <Button
+                    android:id="@+id/btnCheckOut"
+                    android:text="Check Out"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </FrameLayout>
+
+        </LinearLayout>
+    </ScrollView>
+</FrameLayout>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--<color name="colorPrimary">#dd4b39</color>-->
+    <color name="colorPrimary">#00a65a</color>
+    <color name="colorSemi">#F06A56</color>
+    <!--<color name="colorPrimaryDark">#86190b</color>-->
+    <color name="colorPrimaryDark">#105334</color>
+    <!--<color name="colorButtonDefaultFocus">#292F63</color>-->
+    <color name="colorButtonDefaultFocus">@color/colorPrimaryDark</color>
+    <!--<color name="colorButton">#48A0F0</color>-->
+    <color name="colorButton">@color/colorPrimary</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="colorFocus">#777785</color>
+    <color name="colorSplashScreenBase">#393939</color>
+    <color name="colorSplashScreenText">#9b9b9b</color>
+    <color name="colorSplashScreenSemi">#434343</color>
+    <color name="colorLoginFormInActive">#8e8d8d</color>
+</resources>
