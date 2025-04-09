@@ -27,6 +27,7 @@ import android.os.Bundle;
 import android.os.Looper;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -101,7 +102,7 @@ public class ActivityMain extends AppCompatActivity implements IActivityMain.IVi
 
     private Button btnHistory;
     private Button btnSave;
-    private Button btnCamera;
+    private FloatingActionButton btnCamera;
     private RadioButton rbMasuk;
     private RadioButton rbKeluar;
     private ImageView imageViewPreviewPhoto;
@@ -254,6 +255,7 @@ public class ActivityMain extends AppCompatActivity implements IActivityMain.IVi
         setDataFromPhone();
 
         editTextKodeUser.setFocusable(false);
+        editTextNamaUser.setFocusable(false);
         checkAllPermissions();
     }
 
@@ -488,12 +490,9 @@ public class ActivityMain extends AppCompatActivity implements IActivityMain.IVi
         }
 
         if (imageViewPreviewPhoto.getDrawable() == null) {
-            btnCamera.setError("Harap ambil foto terlebih dahulu");
+            Toast.makeText(this, "Harap ambil foto terlebih dahulu", Toast.LENGTH_LONG).show();
             return;
-        } else {
-            btnCamera.setError(null);
         }
-
 
         doAsyncTaskWork(EnumAsyncTask.DO_SAVE_ABSEN);
     }

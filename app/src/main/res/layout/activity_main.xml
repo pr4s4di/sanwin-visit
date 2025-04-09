@@ -12,217 +12,200 @@
         style="?android:attr/progressBarStyleHorizontal"
         android:indeterminate="true"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/linearLayoutLocation" />
+
+    <LinearLayout
+        android:id="@+id/linearLayoutLocation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/txtViewStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Status Location : "
+            android:textColor="#FFFFFF" />
+
+        <TextView
+            android:id="@+id/txtViewStatusLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ON"
+            android:textColor="#FFFFFF" />
+    </LinearLayout>
 
     <android.support.v4.widget.NestedScrollView
         android:fillViewport="true"
+        android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        app:layout_constraintTop_toBottomOf="@id/linearLayoutLocation">
 
         <LinearLayout
             android:id="@+id/linearLayoutForm"
-            android:focusableInTouchMode="true"
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:focusableInTouchMode="true"
+            android:orientation="vertical">
 
-            <android.support.constraint.ConstraintLayout
-                android:layout_weight="1"
-                android:id="@+id/constraintLayoutAbsen"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:padding="10dp">
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="8dp">
 
-                <LinearLayout
-                    android:id="@+id/linearLayoutFormUser"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:weightSum="1"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.6"
-                        android:orientation="vertical">
-
-                        <android.support.design.widget.TextInputLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
-
-                            <android.support.design.widget.TextInputEditText
-                                android:focusable="true"
-                                android:focusableInTouchMode="true"
-                                android:imeOptions="actionSend"
-                                android:inputType="text"
-                                android:id="@+id/editTextKodeUser"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:hint="Kode User" />
-                        </android.support.design.widget.TextInputLayout>
-                        <EditText
-                            android:focusable="false"
-                            android:id="@+id/editTextNamaUser"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="Nama User" />
-                    </LinearLayout>
-
-                    <Button
-                        android:textColor="@android:color/white"
-                        android:padding="10dp"
-                        android:id="@+id/btnHistory"
-                        android:background="@drawable/bg_btn_default"
-                        android:drawableTop="@drawable/ic_history_white"
-                        android:layout_width="0dp"
-                        android:layout_height="70dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="10dp"
-                        android:layout_weight="0.4"
-                        android:text="history" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/linearLayoutFormAbsen"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/linearLayoutFormUser">
-
-                    <RadioGroup
-                        android:id="@+id/rbGroupHadir"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:weightSum="1">
-
-                        <RadioButton
-                            android:drawableLeft="@drawable/ic_car_orange"
-                            android:drawablePadding="10dp"
-                            android:id="@+id/rbKunjungan"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="0.5"
-                            android:text="Kunjungan" />
-
-                        <RadioButton
-                            android:drawableLeft="@drawable/ic_phone_blue"
-                            android:drawablePadding="10dp"
-                            android:id="@+id/rbPhone"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="0.5"
-                            android:text="Phone" />
-                    </RadioGroup>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/linearLayoutButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="70dp"
-                    android:layout_marginTop="10dp"
-                    android:orientation="horizontal"
-                    android:weightSum="1"
-                    app:layout_constraintTop_toBottomOf="@id/linearLayoutFormAbsen">
-
-                    <Button
-                        android:textColor="@android:color/white"
-                        android:layout_marginRight="5dp"
-                        android:padding="10dp"
-                        android:background="@drawable/bg_btn_default"
-                        android:drawableTop="@drawable/ic_camera_white"
-                        android:id="@+id/btnCamera"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0.5"
-                        android:text="Camera" />
-
-                    <Button
-                        android:textColor="@android:color/white"
-                        android:layout_marginLeft="5dp"
-                        android:padding="10dp"
-                        android:background="@drawable/bg_btn_history"
-                        android:drawableTop="@drawable/ic_save_white"
-                        android:id="@+id/btnSave"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0.5"
-                        android:text="Save" />
-                </LinearLayout>
-
-                <ImageView
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    android:visibility="gone"
-                    android:id="@+id/imageViewPreviewPhoto"
-                    android:layout_width="300dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_height="300dp"
-                    app:layout_constraintTop_toBottomOf="@id/viewSeperatorBottom" />
-
-                <View
-                    android:id="@+id/viewSeperatorTop"
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:layout_marginTop="15dp"
-                    android:background="@color/colorPrimary"
-                    app:layout_constraintTop_toBottomOf="@id/linearLayoutButton" />
-
-                <LinearLayout
-                    android:id="@+id/linearLayoutLocation"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    app:layout_constraintTop_toBottomOf="@id/viewSeperatorTop">
-                    <TextView
-                        android:id="@+id/txtViewStatus"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Status Location : " />
-
-                    <TextView
-                        android:id="@+id/txtViewStatusLocation"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="ON" />
-                </LinearLayout>
-
-                <View
-                    android:id="@+id/viewSeperatorBottom"
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@color/colorPrimary"
-                    app:layout_constraintTop_toBottomOf="@id/linearLayoutLocation" />
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/recyclerViewListAbsen"
-                    android:layout_marginTop="10dp"
-                    app:layout_constraintTop_toBottomOf="@id/imageViewPreviewPhoto"
+                <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
+                    <android.support.design.widget.TextInputEditText
+                        android:id="@+id/editTextKodeUser"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        android:hint="Kode User"
+                        android:imeOptions="actionSend"
+                        android:inputType="text" />
+                </android.support.design.widget.TextInputLayout>
 
-                </android.support.v7.widget.RecyclerView>
-            </android.support.constraint.ConstraintLayout>
-            <TextView
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
+                    <android.support.design.widget.TextInputEditText
+                        android:id="@+id/editTextNamaUser"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        android:hint="Nama User"
+                        android:imeOptions="actionSend"
+                        android:inputType="text" />
+                </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayoutFormAbsen"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:background="@color/colorPrimary"
-                android:gravity="center"
-                android:padding="13dp"
-                android:text="&#169; Sanwin IT Solution 2018"
-                android:textColor="@android:color/white"
-                />
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/linearLayoutForm">
+
+                <RadioGroup
+                    android:id="@+id/rbGroupHadir"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
+                    <RadioButton
+                        android:id="@+id/rbKunjungan"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
+                        android:drawableLeft="@drawable/ic_car_orange"
+                        android:drawablePadding="10dp"
+                        android:text="Kunjungan" />
+
+                    <RadioButton
+                        android:id="@+id/rbPhone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
+                        android:drawableLeft="@drawable/ic_phone_blue"
+                        android:drawablePadding="10dp"
+                        android:text="Phone" />
+                </RadioGroup>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayoutButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:paddingHorizontal="8dp"
+                android:weightSum="2"
+                app:layout_constraintTop_toBottomOf="@id/linearLayoutFormAbsen">
+
+                <Button
+                    android:id="@+id/btnHistory"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_btn_default"
+                    android:drawableTop="@drawable/ic_history_white"
+                    android:padding="10dp"
+                    android:text="history"
+                    android:textColor="@android:color/white" />
+
+                <Button
+                    android:id="@+id/btnSave"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_btn_history"
+                    android:drawableTop="@drawable/ic_save_white"
+                    android:padding="10dp"
+                    android:text="Save"
+                    android:textColor="@android:color/white" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/imageViewPreviewPhoto"
+                android:layout_width="300dp"
+                android:layout_height="300dp"
+                android:layout_marginTop="10dp"
+                android:visibility="gone"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/linearLayoutButton" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerViewListAbsen"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:padding="10dp"
+                app:layout_constraintTop_toBottomOf="@id/imageViewPreviewPhoto">
+
+
+            </android.support.v7.widget.RecyclerView>
+
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
+
+    <TextView
+        android:id="@+id/tvCopyright"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/colorPrimary"
+        android:gravity="center"
+        android:padding="13dp"
+        android:text="&#169; Sanwin IT Solution 2018"
+        android:textColor="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/btnCamera"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:backgroundTint="@color/colorPrimary"
+        android:contentDescription="Take Picture"
+        android:src="@drawable/ic_camera_white"
+        app:layout_constraintBottom_toTopOf="@id/tvCopyright"
+        app:layout_constraintRight_toRightOf="parent" />
 </android.support.constraint.ConstraintLayout>
