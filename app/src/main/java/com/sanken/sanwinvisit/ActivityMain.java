@@ -3,6 +3,7 @@ package com.sanken.sanwinvisit;
 import android.Manifest;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -15,7 +16,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.graphics.Rect;
-import android.graphics.drawable.BitmapDrawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -23,6 +23,7 @@ import android.location.LocationManager;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Looper;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -31,7 +32,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.telephony.TelephonyManager;
 import android.text.InputFilter;
@@ -80,8 +80,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
-
-import static com.google.android.gms.location.LocationServices.getFusedLocationProviderClient;
 
 public class ActivityMain extends AppCompatActivity implements IActivityMain.IView {
 
@@ -527,12 +525,14 @@ public class ActivityMain extends AppCompatActivity implements IActivityMain.IVi
 
     private void openCamera() {
         Intent intentTakePhoto = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (intentTakePhoto.resolveActivity(getPackageManager()) != null) {
+        ComponentName pm = intentTakePhoto.resolveActivity(getPackageManager());
+        if (pm != null) {
             //File photo;
             try {
                 fileCapturedImage = FileUtils.createTemporaryFile("picture", ".jpg");
                 currentPhotoPath = fileCapturedImage.getAbsolutePath();
             } catch (Exception e) {
+                Toast.makeText(this, "Error creating temporary file.", Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -543,6 +543,9 @@ public class ActivityMain extends AppCompatActivity implements IActivityMain.IVi
             }
             intentTakePhoto.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
             startActivityForResult(intentTakePhoto, RESULT_ACTIVITY_CAMERA);
+        } else {
+            // No camera app found. Display an error message to the user.
+            Toast.makeText(this, "No camera app found!", Toast.LENGTH_SHORT).show();
         }
     }
 
