@@ -66,11 +66,8 @@ public class FragmentAbsenDetailNote extends Fragment implements IFragmentAbsenD
     @Override
     public void onClick(View v) {
         int id = v.getId();
-        switch (id) {
-            case R.id.btnSaveNote:
-                doValidateInput();
-
-                break;
+        if (id == R.id.btnSaveNote) {
+            doValidateInput();
         }
     }
 

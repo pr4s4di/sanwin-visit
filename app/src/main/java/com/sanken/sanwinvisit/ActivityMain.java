@@ -409,25 +409,18 @@ public class ActivityMain extends AppCompatActivity implements IActivityMain.IVi
     @Override
     public void onClick(View v) {
         int id = v.getId();
-        switch (id) {
-            case R.id.btnCamera:
-                checkCameraPermission();
-                break;
-            case R.id.btnSave:
-                doValidateInput();
-                break;
-            case R.id.btnHistory:
-                doValidateInputHistory();
-                break;
-            case R.id.rbPhone:
-                presenter.setStatusUser("PHONE");
-                break;
-            case R.id.rbKunjungan:
-                presenter.setStatusUser("KUNJUNGAN");
-                break;
-            case R.id.imageViewPreviewPhoto:
-                goToActivityDetailPhoto();
-                break;
+        if (id == R.id.btnCamera) {
+            checkCameraPermission();
+        } else if (id == R.id.btnSave) {
+            doValidateInput();
+        } else if (id == R.id.btnHistory) {
+            doValidateInputHistory();
+        } else if (id == R.id.rbPhone) {
+            presenter.setStatusUser("PHONE");
+        } else if (id == R.id.rbKunjungan) {
+            presenter.setStatusUser("KUNJUNGAN");
+        } else if (id == R.id.imageViewPreviewPhoto) {
+            goToActivityDetailPhoto();
         }
     }
 
@@ -828,15 +821,11 @@ public class ActivityMain extends AppCompatActivity implements IActivityMain.IVi
     @Override
     public boolean onKey(View v, int keyCode, KeyEvent event) {
         int id = v.getId();
-        switch (id) {
-            case R.id.editTextKodeUser:
-                if (event.getAction() == KeyEvent.ACTION_DOWN) {
-                    switch (keyCode) {
-                        case KeyEvent.KEYCODE_ENTER:
-                            //doAsyncTaskWork(EnumAsyncTask.DO_FIND_USER_BY_KODE_USER);
-                            return true;
-                    }
-                }
+        if (id == R.id.editTextKodeUser) {
+            if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                //doAsyncTaskWork(EnumAsyncTask.DO_FIND_USER_BY_KODE_USER);
+                return keyCode == KeyEvent.KEYCODE_ENTER;
+            }
         }
         return false;
     }
@@ -844,12 +833,10 @@ public class ActivityMain extends AppCompatActivity implements IActivityMain.IVi
     @Override
     public void onFocusChange(View v, boolean hasFocus) {
         int id = v.getId();
-        switch (id) {
-            case R.id.editTextKodeUser:
-                if (!hasFocus) {
-                    doAsyncTaskWork(EnumAsyncTask.DO_FIND_USER_BY_KODE_USER);
-                }
-                break;
+        if (id == R.id.editTextKodeUser) {
+            if (!hasFocus) {
+                doAsyncTaskWork(EnumAsyncTask.DO_FIND_USER_BY_KODE_USER);
+            }
         }
     }
 

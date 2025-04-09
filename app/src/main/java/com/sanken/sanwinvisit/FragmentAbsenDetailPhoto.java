@@ -208,16 +208,13 @@ public class FragmentAbsenDetailPhoto extends Fragment implements IFragmentAbsen
     @Override
     public void onClick(View v) {
         int id = v.getId();
-        switch (id) {
-            case R.id.imageViewFotoKunjungan:
-                Intent intent = new Intent(getActivity(), ActivityDetailPhoto.class);
-                intent.putExtra("imagepreview", pathImages);
-                intent.putExtra("imagemode", "url");
-                startActivity(intent);
-                break;
-            case R.id.btnCheckOut:
-                openDialogConfirmation();
-                break;
+        if (id == R.id.imageViewFotoKunjungan) {
+            Intent intent = new Intent(getActivity(), ActivityDetailPhoto.class);
+            intent.putExtra("imagepreview", pathImages);
+            intent.putExtra("imagemode", "url");
+            startActivity(intent);
+        } else if (id == R.id.btnCheckOut) {
+            openDialogConfirmation();
         }
     }
 

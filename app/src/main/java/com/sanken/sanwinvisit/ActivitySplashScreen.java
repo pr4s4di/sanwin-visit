@@ -1,6 +1,7 @@
 package com.sanken.sanwinvisit;
 
 import android.Manifest;
+import android.arch.core.BuildConfig;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -87,7 +88,9 @@ public class ActivitySplashScreen extends AppCompatActivity implements IActivity
     }
 
     private void initializeComponent() {
-        versionName = BuildConfig.VERSION_NAME;
+        // TODO prefer use build config
+        // versionName = BuildConfig.VERSION_NAME;
+        versionName = "1.0.1";
         presenter = new PresenterActivitySplashScreen(this);
         progressBarCheckDownload = findViewById(R.id.progressBarDownloadApk);
         textViewCheckStatus = findViewById(R.id.txtViewCheckingUpdates);
@@ -326,10 +329,8 @@ public class ActivitySplashScreen extends AppCompatActivity implements IActivity
     @Override
     public void onClick(View v) {
         int id = v.getId();
-        switch (id) {
-            case R.id.btnLogin:
-                doAsyncTaskWork(EnumAsyncTask.DO_LOGIN);
-                break;
+        if (id == R.id.btnLogin) {
+            doAsyncTaskWork(EnumAsyncTask.DO_LOGIN);
         }
     }
 

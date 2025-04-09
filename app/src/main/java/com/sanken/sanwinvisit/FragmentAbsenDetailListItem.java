@@ -91,17 +91,12 @@ public class FragmentAbsenDetailListItem extends Fragment implements IFragmentAb
     @Override
     public void onClick(View v) {
         int id = v.getId();
-        switch (id) {
-            case R.id.editTextKodeBarang:
-                goToListBarang();
-                break;
-            case R.id.editTextNamaBarang:
-                goToListBarang();
-                break;
-            case R.id.btnSaveListBarang:
-                doValidateInput();
-
-                break;
+        if (id == R.id.editTextKodeBarang) {
+            goToListBarang();
+        } else if (id == R.id.editTextNamaBarang) {
+            goToListBarang();
+        } else if (id == R.id.btnSaveListBarang) {
+            doValidateInput();
         }
     }
 
@@ -311,10 +306,8 @@ public class FragmentAbsenDetailListItem extends Fragment implements IFragmentAb
     @Override
     public void onViewHolderClick(View view, String id) {
         int idContent = view.getId();
-        switch (idContent) {
-            case R.id.imageViewDeleteItem:
-                showAlertDialog(id);
-                break;
+        if (idContent == R.id.imageViewDeleteItem) {
+            showAlertDialog(id);
         }
     }
 }

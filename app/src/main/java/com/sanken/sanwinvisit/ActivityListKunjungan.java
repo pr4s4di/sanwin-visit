@@ -139,10 +139,8 @@ public class ActivityListKunjungan extends AppCompatActivity implements IActivit
     @Override
     public void onViewHolderClick(View view, String id) {
         int idContent = view.getId();
-        switch (idContent) {
-            case R.id.cardViewListAbsen:
-                goToListKunjunganDetail(id);
-                break;
+        if (idContent == R.id.cardViewListAbsen) {
+            goToListKunjunganDetail(id);
         }
     }
 

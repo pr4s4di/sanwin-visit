@@ -161,13 +161,11 @@ public class ActivityListBarang extends AppCompatActivity implements IActivityLi
     @Override
     public void onViewHolderClick(View view, String id) {
         int idContent = view.getId();
-        switch (idContent) {
-            case R.id.cardViewListBarang:
-                Intent returnIntent = new Intent();
-                returnIntent.putExtra("result", id);
-                setResult(Activity.RESULT_OK, returnIntent);
-                finish();
-                break;
+        if (idContent == R.id.cardViewListBarang) {
+            Intent returnIntent = new Intent();
+            returnIntent.putExtra("result", id);
+            setResult(Activity.RESULT_OK, returnIntent);
+            finish();
         }
     }
 
