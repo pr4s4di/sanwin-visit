@@ -6,6 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".ActivityListKunjungan">
 
+    <ProgressBar
+        android:id="@+id/loadMoreProgressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshLayout"
         android:layout_width="match_parent"
