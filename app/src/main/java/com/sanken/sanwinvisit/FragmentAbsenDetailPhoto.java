@@ -149,7 +149,8 @@ public class FragmentAbsenDetailPhoto extends Fragment implements IFragmentAbsen
             JSONObject jsonObject = new JSONObject(result);
             boolean resultBoolean = jsonObject.getBoolean("result");
             if (resultBoolean) {
-                JSONArray jsonArray = jsonObject.getJSONArray("message");
+                JSONObject messageJsonObject = jsonObject.getJSONObject("message");
+                JSONArray jsonArray = messageJsonObject.getJSONArray("data");
                 if (jsonArray.length() > 0) {
                     String pathImage = jsonArray.getJSONObject(0).getString("nmfoto");
                     String status = jsonArray.getJSONObject(0).getString("stat");

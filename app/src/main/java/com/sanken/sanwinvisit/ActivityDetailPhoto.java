@@ -5,11 +5,10 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
-import android.view.WindowManager;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -23,7 +22,6 @@ public class ActivityDetailPhoto extends AppCompatActivity implements IActivityD
     private ScaleGestureDetector scaleGestureDetector;
     private IActivityDetailPhoto.IPresenter presenter;
     private ImageView imageViewPreviewPhoto;
-    private TouchImageView touchImageViewPreviewPhoto;
     private float scaleFactor;
 
     @Override
@@ -42,7 +40,7 @@ public class ActivityDetailPhoto extends AppCompatActivity implements IActivityD
     private void initializeComponent() {
         presenter = new PresenterActivityDetailPhoto(this);
         imageViewPreviewPhoto = findViewById(R.id.imageViewPreviewPhoto);
-        touchImageViewPreviewPhoto = findViewById(R.id.touchImageViewPreviewPhoto);
+        TouchImageView touchImageViewPreviewPhoto = findViewById(R.id.touchImageViewPreviewPhoto);
         scaleGestureDetector = new ScaleGestureDetector(this, new ScaleListener());
         Intent intent = getIntent();
         String pathImage = intent.getStringExtra("imagepreview");
