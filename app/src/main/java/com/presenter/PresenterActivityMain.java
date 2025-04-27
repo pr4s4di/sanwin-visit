@@ -1,6 +1,5 @@
 package com.presenter;
 
-import android.graphics.Bitmap;
 import android.location.Address;
 import android.util.Base64;
 import android.util.Log;
@@ -11,7 +10,6 @@ import com.models.ModelSaveAbsensi;
 import com.strings.URLCollections;
 import com.utils.ConnectionUtils;
 
-import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
 
 /**
@@ -55,12 +53,37 @@ public class PresenterActivityMain implements IActivityMain.IPresenter {
     }
 
     @Override
-    public void setImageByteArray(Bitmap bitmapCapturedImage) {
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bitmapCapturedImage.compress(Bitmap.CompressFormat.JPEG, 100, stream);
-        byte[] streamByteArray = stream.toByteArray();
-        modelSaveAbsensi.setPathPhoto(Base64.encodeToString(streamByteArray, Base64.DEFAULT));
+    public void setImageByteArray(byte[] imageByteArray) {
+        // 1. Add null/empty check for robustness
+        if (imageByteArray == null || imageByteArray.length == 0) {
+            Log.w("Presenter", "setImageByteArray received null or empty byte array.");
+            // Optionally set a default/empty value in the model or just return
+            // modelSaveAbsensi.setPathPhoto(null); // Or "" depending on your model's needs
+            return;
+        }
 
+        try {
+            // 2. Directly encode the received byte array to Base64
+            String base64ImageString = Base64.encodeToString(imageByteArray, Base64.DEFAULT);
+
+            // 3. Set the Base64 string to the model object
+            if (modelSaveAbsensi != null) {
+                modelSaveAbsensi.setPathPhoto(base64ImageString);
+                Log.d("Presenter", "Base64 image string set in model.");
+            } else {
+                Log.e("Presenter", "modelSaveAbsensi is null. Cannot set photo path.");
+                // Handle the case where the model is not initialized
+            }
+
+        } catch (Exception e) {
+            // Catch potential exceptions during encoding or setting, although Base64 encoding itself rarely throws
+            Log.e("Presenter", "Error setting image byte array to model", e);
+            // Handle error appropriately
+        } catch (OutOfMemoryError e) {
+            // Base64 encoding can consume memory, especially for large byte arrays
+            Log.e("Presenter", "OutOfMemoryError during Base64 encoding", e);
+            // Handle OOM error
+        }
     }
 
     @Override

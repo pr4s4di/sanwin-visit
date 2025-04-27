@@ -1,6 +1,5 @@
 package com.interfaces;
 
-import android.graphics.Bitmap;
 import android.location.Address;
 import android.view.View;
 
@@ -16,7 +15,8 @@ public interface IActivityMain {
         String doSaveAbsensi();
         void setLatitude(double latitude);
         void setLongitude(double longitude);
-        void setImageByteArray(Bitmap bitmapCapturedImage);
+
+        void setImageByteArray(byte[] imageByteArray);
         String doFindUserByKodeUser(String trim);
         void setStatusUser(String keluar);
         void setKodeUser(String kode);

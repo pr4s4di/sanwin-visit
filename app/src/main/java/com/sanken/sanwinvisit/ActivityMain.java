@@ -4,7 +4,6 @@ import android.Manifest;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -13,14 +12,11 @@ import android.content.IntentSender;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
 import android.graphics.Rect;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
-import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -31,7 +27,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.telephony.TelephonyManager;
@@ -68,8 +63,6 @@ import com.interfaces.IActivityMain;
 import com.presenter.PresenterActivityMain;
 import com.strings.ActionCollections;
 import com.strings.SharedPreferenceCollections;
-import com.utils.BitmapUtils;
-import com.utils.FileUtils;
 import com.utils.LayoutUtils;
 import com.utils.PermissionsUtils;
 
@@ -526,21 +519,6 @@ public class ActivityMain extends AppCompatActivity implements IActivityMain.IVi
         Intent intentTakePhoto = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         ComponentName pm = intentTakePhoto.resolveActivity(getPackageManager());
         if (pm != null) {
-            //File photo;
-            try {
-                fileCapturedImage = FileUtils.createTemporaryFile("picture", ".jpg");
-                currentPhotoPath = fileCapturedImage.getAbsolutePath();
-            } catch (Exception e) {
-                Toast.makeText(this, "Error creating temporary file.", Toast.LENGTH_SHORT).show();
-                return;
-            }
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                imageUri = FileProvider.getUriForFile(this, "com.sanken.sanwinvisit.fileprovider", fileCapturedImage);
-            } else {
-                imageUri = Uri.fromFile(fileCapturedImage);
-            }
-            intentTakePhoto.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
             startActivityForResult(intentTakePhoto, RESULT_ACTIVITY_CAMERA);
         } else {
             // No camera app found. Display an error message to the user.
@@ -582,82 +560,88 @@ public class ActivityMain extends AppCompatActivity implements IActivityMain.IVi
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        switch (resultCode) {
-            case RESULT_OK:
-                switch (requestCode) {
-                    case RESULT_ACTIVITY_CAMERA:
-                        setCapturedPicToImageView();
-                        //setCapturedImageToImageView(data);
-                        break;
-                }
-                switch (requestCode) {
-                    case REQUEST_HISTORY_KUNJUNGAN:
-                        break;
-                }
-                break;
-        }
-    }
 
+        if (resultCode == RESULT_OK) {
+            if (requestCode == RESULT_ACTIVITY_CAMERA) {
+                // Check if data is not null and contains the expected extras
+                if (data != null && data.getExtras() != null) {
+                    Bundle extras = data.getExtras();
+                    Bitmap imageBitmap = (Bitmap) extras.get("data"); // Retrieve the thumbnail
 
-    private void setCapturedPicToImageView() {
-        try {
-            imageViewPreviewPhoto.setVisibility(View.VISIBLE);
-            int targetWidth = 300;
-            int targetHeight = 300;
-            BitmapFactory.Options options = new BitmapFactory.Options();
-            BitmapFactory.decodeFile(currentPhotoPath, options);
-            options.inJustDecodeBounds = true;
-            int scaleFactor = Math.min(options.outWidth / targetWidth, options.outHeight / targetHeight);
-            options.inJustDecodeBounds = false;
-            options.inSampleSize = scaleFactor;
-            bitmapCapturedImage = BitmapFactory.decodeFile(currentPhotoPath, options);
-            imageViewPreviewPhoto.setImageBitmap(bitmapCapturedImage);
-            presenter.setImageByteArray(bitmapCapturedImage);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void setCapturedImageToImageView(Intent data) {
-        Matrix mat = new Matrix();
-        if (fileCapturedImage != null) {
-            if (!fileCapturedImage.getPath().isEmpty()) {
-                try {
-                    ExifInterface exif = new ExifInterface(fileCapturedImage.getPath());
-                    String orientString = exif.getAttribute(ExifInterface.TAG_ORIENTATION);
-                    int orientation = orientString != null ? Integer.parseInt(orientString) : ExifInterface.ORIENTATION_NORMAL;
-                    int rotateAngle = 0;
-                    if (orientation == ExifInterface.ORIENTATION_ROTATE_90)
-                        rotateAngle = 90;
-                    if (orientation == ExifInterface.ORIENTATION_ROTATE_180)
-                        rotateAngle = 180;
-                    if (orientation == ExifInterface.ORIENTATION_ROTATE_270)
-                        rotateAngle = 270;
-                    mat.setRotate(rotateAngle, (float) imageViewPreviewPhoto.getWidth() / 2, (float) imageViewPreviewPhoto.getHeight() / 2);
-                } catch (IOException e) {
-                    e.printStackTrace();
+                    if (imageBitmap != null) {
+                        Log.d("onActivityResult", "Thumbnail bitmap received.");
+                        // Call the handler function, passing the received bitmap
+                        displayCapturedThumbnail(imageBitmap);
+                    } else {
+                        // Handle case where 'data' extra is missing or null
+                        Log.e("onActivityResult", "Bitmap thumbnail ('data' extra) was null.");
+                        Toast.makeText(this, "Failed to retrieve camera image thumbnail.", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    // Handle case where data or extras are null
+                    Log.e("onActivityResult", "Intent data or extras were null. Cannot get thumbnail.");
+                    Toast.makeText(this, "Failed to retrieve camera result data.", Toast.LENGTH_SHORT).show();
                 }
             }
+
+        } else if (resultCode == RESULT_CANCELED) {
+            Log.w("onActivityResult", "Action cancelled by user for requestCode: " + requestCode);
+            // Handle cancellation if needed
+        } else {
+            Log.e("onActivityResult", "Action failed or unexpected resultCode: " + resultCode + " for requestCode: " + requestCode);
+            // Handle other results or errors
         }
-        getContentResolver().notifyChange(imageUri, null);
-        ContentResolver cr = getContentResolver();
-        Bitmap bitmap;
+    }
+
+    /**
+     * Displays the captured thumbnail Bitmap in the ImageView and passes it (or its byte array)
+     * to the presenter.
+     *
+     * @param capturedThumbnail The low-resolution thumbnail bitmap received from the camera intent.
+     */
+    private void displayCapturedThumbnail(Bitmap capturedThumbnail) {
+        if (capturedThumbnail == null) {
+            Log.e("displayThumbnail", "Input bitmap was null!");
+            return;
+        }
         try {
-            bitmap = MediaStore.Images.Media.getBitmap(cr, imageUri);
-            //Ini Real Image
-            int maxWidth = 1024, maxHeight = 1024;
-            bitmap = BitmapUtils.resizeImage(maxWidth, maxHeight, bitmap, mat);
-            bitmapCapturedImage = bitmap;
-            //Ini buat preview
-            maxWidth /= 2;
-            maxHeight /= 2;
-            bitmap = BitmapUtils.resizeImage(maxWidth, maxHeight, bitmap, new Matrix());
-            imageViewPreviewPhoto.setImageBitmap(bitmap);
-            imageViewPreviewPhoto.setVisibility(View.VISIBLE);
-            presenter.setImageByteArray(bitmapCapturedImage);
+            if (imageViewPreviewPhoto != null) {
+                imageViewPreviewPhoto.setVisibility(View.VISIBLE);
+                // Directly set the thumbnail bitmap. No scaling from file needed.
+                imageViewPreviewPhoto.setImageBitmap(capturedThumbnail);
+                Log.d("displayThumbnail", "Thumbnail set to ImageView.");
+            } else {
+                Log.w("displayThumbnail", "imageViewPreviewPhoto is null.");
+            }
+
+
+            // --- Handle passing data to the presenter ---
+            if (presenter != null) {
+                // OPTION 1: If presenter accepts a Bitmap directly
+                // presenter.setImageBitmap(capturedThumbnail); // Assuming such a method exists
+
+                // OPTION 2: If presenter specifically needs a byte array (like original code)
+                // Convert the thumbnail bitmap to a byte array
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                // Choose compression format (PNG is lossless, JPEG is lossy)
+                // Quality is ignored for PNG. Use 100 for best quality JPEG.
+                capturedThumbnail.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                byte[] byteArray = stream.toByteArray();
+                presenter.setImageByteArray(byteArray); // Pass the byte array
+                Log.d("displayThumbnail", "Bitmap converted to byte array and passed to presenter.");
+
+                // Optional: If you no longer need the bitmap after conversion, consider recycling
+                // to free memory faster, but be careful if it's still used elsewhere.
+                // capturedThumbnail.recycle(); // Use with caution!
+
+            } else {
+                Log.w("displayThumbnail", "presenter is null.");
+            }
 
         } catch (Exception e) {
-            Toast.makeText(this, "Failed to load image", Toast.LENGTH_SHORT).show();
+            Log.e("displayThumbnail", "Error displaying thumbnail or passing to presenter", e);
+            // Consider showing a user-friendly error message
+            // Toast.makeText(this, "Error displaying image.", Toast.LENGTH_SHORT).show();
         }
     }
 
