@@ -6,7 +6,6 @@ import com.enums.EnumRequestType;
 import com.interfaces.IActivitySplashScreen;
 import com.strings.URLCollections;
 import com.utils.ConnectionUtils;
-import com.utils.FileUtils;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -78,7 +77,7 @@ public class PresenterActivitySplashScreen implements IActivitySplashScreen.IPre
                 String link = String.format("%s%s", URLCollections.SERVER, URLCollections.GET_SERVER_APK);
                 String path = "";
                 try {
-                    path = FileUtils.createTemporaryFile("sanwinvisitupdate", ".apk").getAbsolutePath();
+//                    path = FileUtils.createTemporaryFile(this,"sanwinvisitupdate", ".apk").getAbsolutePath();
                     URL url = new URL(link);
                     URLConnection connection = url.openConnection();
                     connection.connect();
