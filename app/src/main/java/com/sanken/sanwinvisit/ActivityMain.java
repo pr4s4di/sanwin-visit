@@ -97,7 +97,6 @@ public class ActivityMain extends AppCompatActivity implements IActivityMain.IVi
     private Button btnSave;
     private FloatingActionButton btnCamera;
     private RadioButton rbMasuk;
-    private RadioButton rbKeluar;
     private ImageView imageViewPreviewPhoto;
     private TextView txtViewStatusLocation;
     private TextInputEditText editTextKodeUser;
@@ -219,7 +218,6 @@ public class ActivityMain extends AppCompatActivity implements IActivityMain.IVi
         btnCamera = findViewById(R.id.btnCamera);
 
         rbMasuk = findViewById(R.id.rbKunjungan);
-        rbKeluar = findViewById(R.id.rbPhone);
         imageViewPreviewPhoto = findViewById(R.id.imageViewPreviewPhoto);
         txtViewStatusLocation = findViewById(R.id.txtViewStatusLocation);
         editTextKodeUser = findViewById(R.id.editTextKodeUser);
@@ -240,7 +238,6 @@ public class ActivityMain extends AppCompatActivity implements IActivityMain.IVi
         imageViewPreviewPhoto.setOnClickListener(this);
         progressBarLoading.setVisibility(View.GONE);
         rbMasuk.setOnClickListener(this);
-        rbKeluar.setOnClickListener(this);
 
         editTextKodeUser.setFilters(new InputFilter[]{new InputFilter.AllCaps()});
 
@@ -250,6 +247,8 @@ public class ActivityMain extends AppCompatActivity implements IActivityMain.IVi
         editTextKodeUser.setFocusable(false);
         editTextNamaUser.setFocusable(false);
         checkAllPermissions();
+        presenter.setStatusUser("KUNJUNGAN");
+        rbMasuk.setChecked(true);
     }
 
     private void setDataFromPhone() {
@@ -408,8 +407,6 @@ public class ActivityMain extends AppCompatActivity implements IActivityMain.IVi
             doValidateInput();
         } else if (id == R.id.btnHistory) {
             doValidateInputHistory();
-        } else if (id == R.id.rbPhone) {
-            presenter.setStatusUser("PHONE");
         } else if (id == R.id.rbKunjungan) {
             presenter.setStatusUser("KUNJUNGAN");
         } else if (id == R.id.imageViewPreviewPhoto) {
@@ -473,13 +470,11 @@ public class ActivityMain extends AppCompatActivity implements IActivityMain.IVi
             editTextNamaUser.setError(null);
         }
 
-        if (!rbMasuk.isChecked() && !rbKeluar.isChecked()) {
+        if (!rbMasuk.isChecked()) {
             rbMasuk.setError("Harap pilih salah satu");
-            rbKeluar.setError("Harap pilih salah satu");
             return;
         } else {
             rbMasuk.setError(null);
-            rbKeluar.setError(null);
         }
 
         if (imageViewPreviewPhoto.getDrawable() == null) {

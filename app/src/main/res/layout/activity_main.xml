@@ -117,15 +117,6 @@
                         android:drawableLeft="@drawable/ic_car_orange"
                         android:drawablePadding="10dp"
                         android:text="Kunjungan" />
-
-                    <RadioButton
-                        android:id="@+id/rbPhone"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.5"
-                        android:drawableLeft="@drawable/ic_phone_blue"
-                        android:drawablePadding="10dp"
-                        android:text="Phone" />
                 </RadioGroup>
             </LinearLayout>
 
